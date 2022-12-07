@@ -1,9 +1,10 @@
 package tw.cn.gtb;
 
-import java.io.File;
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class App {
     static final TaskRespository taskRespository = new TaskRespository();
@@ -15,26 +16,23 @@ public class App {
     public List<String> run() {
         List<String> fileLines = taskRespository.readFileLines();
         List<Task> tasks = taskRespository.LoadTasks(fileLines);
-        return formattedTasks(tasks);
+        return getFormattedTasks(tasks);
     }
 
-    private List<String> formattedTasks(List<Task> tasks) {
+    private List<String> getFormattedTasks(List<Task> tasks) {
         List<String> res = new ArrayList<>();
         res.add("#To be done");
-        res.addAll(getConditionalTask(tasks, false));
+        res.addAll(getConditionalFormattedTasks(tasks, false));
         res.add("#Completed");
-        res.addAll(getConditionalTask(tasks, true));
+        res.addAll(getConditionalFormattedTasks(tasks, true));
         return res;
     }
 
-    private Collection<String> getConditionalTask(List<Task> tasks, boolean completed) {
-        List<String> res = new ArrayList<>();
-        for (Task task : tasks) {
-            if (task.isCompleted() == completed) {
-                String s = task.getId() + " " + task.getName();
-                res.add(s);
-            }
-        }
+    private List<String> getConditionalFormattedTasks(List<Task> tasks, boolean isCompleted) {
+        List<String> res = tasks.stream().
+                filter(task -> task.isCompleted() == isCompleted)
+                .map(Task::format)
+                .collect(Collectors.toList());
         if (res.isEmpty()) res.add("Empty");
         return res;
     }

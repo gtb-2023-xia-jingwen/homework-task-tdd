@@ -22,4 +22,8 @@ public class Task {
     public boolean isCompleted() {
         return completed;
     }
+
+    public String format() {
+        return id + " " + name;
+    }
 }

@@ -9,6 +9,6 @@ class AppTest {
     void should_show_all_tasks() {
         App app = new App();
         List<String> res = app.run();
-        Assertions.assertEquals(List.of("#To be done", "1 go to walk", "2 count stars", "#Completed", "Empty"), res);
+        Assertions.assertEquals(List.of("#To be done", "Empty" , "#Completed", "1 go to walk", "2 count stars"), res);
     }
 }
