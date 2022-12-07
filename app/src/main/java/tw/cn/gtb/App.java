@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 public class App {
@@ -18,10 +19,15 @@ public class App {
     }
 
     public List<String> run() {
+        List<String> res = new ArrayList<>();
         try {
-            return Files.readAllLines(Path.of(TASK_FILE));
+            List<String> tasks = Files.readAllLines(Path.of(TASK_FILE));
+            for (int i = 0; i < tasks.size(); i++) {
+                res.add((i + 1) + " " + tasks.get(i));
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return res;
     }
 }
