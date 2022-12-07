@@ -11,10 +11,6 @@ public class Task {
         this.completed = completed;
     }
 
-    public int getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }
