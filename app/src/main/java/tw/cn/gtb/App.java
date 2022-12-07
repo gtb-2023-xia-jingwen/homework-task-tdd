@@ -3,12 +3,25 @@
  */
 package tw.cn.gtb;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+
+    static final String TASK_FILE = System.getProperty("user.home") + File.separator + ".todo" + File.separator + "tasks";
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        throw new UnsupportedOperationException();
+    }
+
+    public List<String> run() {
+        try {
+            return Files.readAllLines(Path.of(TASK_FILE));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

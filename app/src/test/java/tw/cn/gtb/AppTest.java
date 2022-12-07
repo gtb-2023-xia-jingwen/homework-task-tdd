@@ -3,13 +3,15 @@
  */
 package tw.cn.gtb;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 class AppTest {
     @Test
-    void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+    void should_show_all_tasks() {
+        App app = new App();
+        List<String> res = app.run();
+        Assertions.assertEquals(List.of("go to walk", "count stars"), res);
     }
 }
