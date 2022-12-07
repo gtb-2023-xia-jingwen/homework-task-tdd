@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class App {
@@ -19,15 +20,43 @@ public class App {
     }
 
     public List<String> run() {
+        List<Task> tasks = readAllTasks();
+        return formattedTasks(tasks);
+    }
+
+    private List<String> formattedTasks(List<Task> tasks) {
         List<String> res = new ArrayList<>();
-        try {
-            List<String> tasks = Files.readAllLines(Path.of(TASK_FILE));
-            for (int i = 0; i < tasks.size(); i++) {
-                res.add((i + 1) + " " + tasks.get(i));
+        res.add("#To be done");
+        res.addAll(getConditionalTask(tasks, false));
+        res.add("#Completed");
+        res.addAll(getConditionalTask(tasks, true));
+        return res;
+    }
+
+    private Collection<String> getConditionalTask(List<Task> tasks, boolean completed) {
+        List<String> res = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.isCompleted() == completed) {
+                String s = task.getId() + " " + task.getName();
+                res.add(s);
             }
+        }
+        return res;
+    }
+
+    private static List<Task> readAllTasks() {
+        List<Task> tasks = new ArrayList<>();
+        List<String> lines;
+        try {
+            lines = Files.readAllLines(Path.of(TASK_FILE));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return res;
+        for (int i = 0; i < lines.size(); i++) {
+            String[] fields = lines.get(i).split(" ", 2);
+            boolean completed = fields[0].equals("√");
+            tasks.add(new Task(i + 1, fields[1], completed));
+        }
+        return tasks;
     }
 }
