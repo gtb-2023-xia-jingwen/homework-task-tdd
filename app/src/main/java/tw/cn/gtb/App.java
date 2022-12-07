@@ -41,6 +41,7 @@ public class App {
                 res.add(s);
             }
         }
+        if (res.isEmpty()) res.add("Empty");
         return res;
     }
 
