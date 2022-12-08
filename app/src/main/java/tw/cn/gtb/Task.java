@@ -1,5 +1,8 @@
 package tw.cn.gtb;
 
+import lombok.Getter;
+
+@Getter
 public class Task {
     private final int id;
     private final String name;
@@ -9,14 +12,6 @@ public class Task {
         this.id = id;
         this.name = name;
         this.completed = completed;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public boolean isCompleted() {
-        return completed;
     }
 
     public String format() {

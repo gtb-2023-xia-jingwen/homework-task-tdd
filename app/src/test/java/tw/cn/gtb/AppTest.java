@@ -12,10 +12,13 @@ import java.util.List;
 
 class AppTest {
 
+    private App app;
+
     @BeforeEach
     void initData() {
         List<String> lines = List.of("v go to walk", "v count stars");
         writeDataToFile(lines);
+        app = new App();
     }
 
     private static void writeDataToFile(List<String> lines) {
@@ -36,8 +39,10 @@ class AppTest {
         class ListTasksWhenExists {
             @Test
             void should_show_tasks_when_task_exists() {
-                App app = new App();
+                // Given
+                // When
                 List<String> res = app.run();
+                // Then
                 Assertions.assertEquals(List.of("#To be done", "Empty", "#Completed", "1 go to walk", "2 count stars"), res);
             }
         }
@@ -49,8 +54,11 @@ class AppTest {
         class AddTaskGivenSingleName {
             @Test
             void should_add_task_with_single_word() {
-                new App().run("add", "rush");
-                List<String> res = new App().run();
+                // Given
+                // When
+                app.run("add", "rush");
+                // Then
+                List<String> res = app.run();
                 Assertions.assertEquals(List.of("#To be done", "3 rush", "#Completed", "1 go to walk", "2 count stars"), res);
             }
         }
