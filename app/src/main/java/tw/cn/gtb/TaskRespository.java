@@ -1,6 +1,5 @@
 package tw.cn.gtb;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,7 +8,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TaskRespository {
-    static final String TASK_FILE = System.getProperty("user.home") + File.separator + ".todo" + File.separator + "tasks";
 
     public List<Task> LoadTasks(List<String> lines) {
         List<Task> tasks = new ArrayList<>();
@@ -24,14 +22,14 @@ public class TaskRespository {
     public List<String> readFileLines() {
         List<String> lines;
         try {
-            lines = Files.readAllLines(Path.of(TASK_FILE));
+            lines = Files.readAllLines(Path.of(Constant.TASK_FILE));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         return lines;
     }
 
-    List<String> getConditionalFormattedTasks(List<Task> tasks, boolean isCompleted) {
+    private List<String> getConditionalFormattedTasks(List<Task> tasks, boolean isCompleted) {
         List<String> res = tasks.stream().
                 filter(task -> task.isCompleted() == isCompleted)
                 .map(Task::format)
@@ -39,4 +37,13 @@ public class TaskRespository {
         if (res.isEmpty()) res.add("Empty");
         return res;
     }
+
+    public List<String> getFormattedToBeDoneTasks(List<Task> tasks) {
+        return getConditionalFormattedTasks(tasks, false);
+    }
+
+    public List<String> getFormattedCompletedTasks(List<Task> tasks) {
+        return getConditionalFormattedTasks(tasks, true);
+    }
+
 }

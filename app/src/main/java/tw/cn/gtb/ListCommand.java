@@ -15,9 +15,9 @@ public class ListCommand {
     private List<String> getFormattedTasks(List<Task> tasks) {
         List<String> res = new ArrayList<>();
         res.add("#To be done");
-        res.addAll(taskRespository.getConditionalFormattedTasks(tasks, false));
+        res.addAll(taskRespository.getFormattedToBeDoneTasks(tasks));
         res.add("#Completed");
-        res.addAll(taskRespository.getConditionalFormattedTasks(tasks, true));
+        res.addAll(taskRespository.getFormattedCompletedTasks(tasks));
         return res;
     }
 }
