@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class TaskRespository {
 
-    public List<Task> LoadTasks(List<String> lines) {
+    public List<Task> loadTasks(List<String> lines) {
         List<Task> tasks = new ArrayList<>();
         for (int i = 0; i < lines.size(); i++) {
             String[] fields = lines.get(i).split(" ", 2);

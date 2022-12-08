@@ -8,7 +8,7 @@ public class ListCommand {
 
     public List<String> run() {
         List<String> fileLines = taskRespository.readFileLines();
-        List<Task> tasks = taskRespository.LoadTasks(fileLines);
+        List<Task> tasks = taskRespository.loadTasks(fileLines);
         return getFormattedTasks(tasks);
     }
 
