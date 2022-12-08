@@ -3,6 +3,7 @@ package tw.cn.gtb;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,4 +47,14 @@ public class TaskRespository {
         return getConditionalFormattedTasks(tasks, true);
     }
 
+    public List<String> create(Task task) {
+        try (var bw =
+                     Files.newBufferedWriter(Path.of(Constant.TASK_FILE), new StandardOpenOption[]{StandardOpenOption.APPEND})){
+            bw.write("+ " + task.getName());
+            bw.newLine();
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+        return List.of();
+    }
 }
