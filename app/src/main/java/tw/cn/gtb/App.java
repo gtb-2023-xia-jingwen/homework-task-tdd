@@ -12,7 +12,9 @@ public class App {
 
     public List<String> run(String... args) {
         if ((args.length > 0) && args[0].equals("add")) {
-            return new AddCommand(args).execute();
+            String[] names = new String[args.length - 1];
+            System.arraycopy(args, 1, names, 0, names.length);
+            return new AddCommand(names).execute();
         }
         return listCommand.run();
     }

@@ -17,14 +17,14 @@ public class AddCommandTest {
 
     @Test
     public void should_add_test_with_single_word() {
-        var cmd = new AddCommand(taskRespository, "add", "rush");
+        var cmd = new AddCommand(taskRespository,  "rush");
         cmd.execute();
         verify(taskRespository).create(new Task(0, "rush", false));
     }
 
     @Test
     public void should_add_test_with_multiple_words() {
-        var cmd = new AddCommand(taskRespository, "add", "YES", "And You And I");
+        var cmd = new AddCommand(taskRespository, "YES", "And You And I");
         cmd.execute();
         verify(taskRespository).create(new Task(0, "YES And You And I", false));
     }

@@ -3,15 +3,14 @@ package tw.cn.gtb;
 import lombok.Getter;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Getter
 public class AddCommand {
-    private TaskRespository taskRespository = new TaskRespository();
+    private final TaskRespository taskRespository;
     private final String[] args;
 
     public AddCommand(String... args) {
+        this.taskRespository = new TaskRespository();
         this.args = args;
     }
 
@@ -21,7 +20,7 @@ public class AddCommand {
     }
 
     public List<String> execute() {
-        String taskName = Stream.of(args).skip(1).collect(Collectors.joining(" "));
+        String taskName = String.join(" ", args);
         var task = TaskFactory.createTask(0, taskName, false);
         return taskRespository.create(task);
     }
