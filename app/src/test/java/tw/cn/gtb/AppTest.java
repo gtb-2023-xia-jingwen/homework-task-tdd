@@ -62,5 +62,18 @@ class AppTest {
                 Assertions.assertEquals(List.of("#To be done", "3 rush", "#Completed", "1 go to walk", "2 count stars"), res);
             }
         }
+
+        @Nested
+        class AddTaskGivenMultipleName {
+            @Test
+            void should_add_task_with_multiple_words() {
+                // Given
+                // When
+                app.run("add", "YES", "And You And I");
+                // Then
+                List<String> res = app.run();
+                Assertions.assertEquals(List.of("#To be done", "3 YES And You And I", "#Completed", "1 go to walk", "2 count stars"), res);
+            }
+        }
     }
 }
