@@ -8,11 +8,15 @@ import java.util.stream.Stream;
 
 @Getter
 public class AddCommand {
-    static final TaskRespository taskRespository = new TaskRespository();
-
+    private TaskRespository taskRespository = new TaskRespository();
     private final String[] args;
 
-    public AddCommand(String[] args) {
+    public AddCommand(String... args) {
+        this.args = args;
+    }
+
+    public AddCommand(TaskRespository taskRespository, String... args) {
+        this.taskRespository = taskRespository;
         this.args = args;
     }
 
