@@ -47,7 +47,7 @@ public class TaskRespository {
         return getConditionalFormattedTasks(tasks, true);
     }
 
-    public List<String> create(Task task) {
+    public void create(Task task) {
         try (var bw =
                      Files.newBufferedWriter(Path.of(Constant.TASK_FILE), new StandardOpenOption[]{StandardOpenOption.APPEND})){
             bw.write("+ " + task.getName());
@@ -55,6 +55,5 @@ public class TaskRespository {
         } catch (IOException e) {
             throw new RuntimeException();
         }
-        return List.of();
     }
 }
