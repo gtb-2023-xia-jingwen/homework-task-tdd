@@ -41,7 +41,7 @@ class AppTest {
             void should_show_tasks_when_task_exists() {
                 // Given
                 // When
-                List<String> res = app.run();
+                List<String> res = app.run("list");
                 // Then
                 Assertions.assertEquals(List.of("#To be done", "Empty", "#Completed", "1 go to walk", "2 count stars"), res);
             }
@@ -58,7 +58,7 @@ class AppTest {
                 // When
                 app.run("add", "rush");
                 // Then
-                List<String> res = app.run();
+                List<String> res = app.run("list");
                 Assertions.assertEquals(List.of("#To be done", "3 rush", "#Completed", "1 go to walk", "2 count stars"), res);
             }
         }
@@ -71,7 +71,7 @@ class AppTest {
                 // When
                 app.run("add", "YES", "And You And I");
                 // Then
-                List<String> res = app.run();
+                List<String> res = app.run("list");
                 Assertions.assertEquals(List.of("#To be done", "3 YES And You And I", "#Completed", "1 go to walk", "2 count stars"), res);
             }
         }
@@ -86,7 +86,7 @@ class AppTest {
                 // When
                 app.run("remove", "1");
                 // Then
-                List<String> res = app.run();
+                List<String> res = app.run("list");
                 Assertions.assertEquals(List.of("#To be done", "Empty", "#Completed", "2 count stars"), res);
             }
 
@@ -95,7 +95,7 @@ class AppTest {
                 // When
                 app.run("remove", "1", "2");
                 // Then
-                List<String> res = app.run();
+                List<String> res = app.run("list");
                 Assertions.assertEquals(List.of("#To be done", "Empty", "#Completed", "Empty"), res);
             }
 
@@ -104,7 +104,7 @@ class AppTest {
                 // When
                 app.run("remove", "1", "404");
                 // Then
-                List<String> res = app.run();
+                List<String> res = app.run("list");
                 Assertions.assertEquals(List.of("#To be done", "Empty", "#Completed", "2 count stars"), res);
             }
         }

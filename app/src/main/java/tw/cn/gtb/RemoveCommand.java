@@ -4,13 +4,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class RemoveCommand {
+public class RemoveCommand extends Command{
 
-    private final TaskRespository taskRespository;
     private final String[] param;
 
     public RemoveCommand(TaskRespository taskRespository, String... params) {
-        this.taskRespository = taskRespository;
+        super(taskRespository);
         this.param = params;
     }
 

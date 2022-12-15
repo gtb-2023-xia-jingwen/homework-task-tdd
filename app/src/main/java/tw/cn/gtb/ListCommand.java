@@ -3,10 +3,13 @@ package tw.cn.gtb;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListCommand {
-    static final TaskRespository taskRespository = new TaskRespository();
+public class ListCommand extends Command {
 
-    public List<String> run() {
+    public ListCommand(TaskRespository taskRespository) {
+        super(taskRespository);
+    }
+
+    public List<String> execute() {
         List<Task> tasks = taskRespository.loadTasks();
         return getFormattedTasks(tasks);
     }

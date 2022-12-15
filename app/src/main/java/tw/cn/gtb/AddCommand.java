@@ -5,18 +5,12 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class AddCommand {
+public class AddCommand extends Command{
     private final TaskMarshaller taskMarshaller = new TaskMarshaller();
-    private final TaskRespository taskRespository;
     private final String[] args;
 
-    public AddCommand(String... args) {
-        this.taskRespository = new TaskRespository();
-        this.args = args;
-    }
-
     public AddCommand(TaskRespository taskRespository, String... args) {
-        this.taskRespository = taskRespository;
+        super(taskRespository);
         this.args = args;
     }
 
