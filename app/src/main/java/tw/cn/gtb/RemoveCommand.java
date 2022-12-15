@@ -1,7 +1,7 @@
 package tw.cn.gtb;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class RemoveCommand {
 
@@ -22,10 +22,9 @@ public class RemoveCommand {
     }
 
     private List<Integer> parseIds() {
-        List<Integer> ids = new ArrayList<>();
-        for (String id : param) {
-            ids.add(Integer.parseInt(id));
-        }
-        return ids;
+        Stream.of(param)
+                .map(Integer::parseInt)
+                .forEach(taskRespository::removeTaskById);
+        return List.of();
     }
 }
