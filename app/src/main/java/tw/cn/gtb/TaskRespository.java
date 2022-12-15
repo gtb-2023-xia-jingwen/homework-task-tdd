@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TaskRespository {
+    private final TaskMarshaller taskMarshaller = new TaskMarshaller();
 
     public List<Task> loadTasks(List<String> lines) {
         List<Task> tasks = new ArrayList<>();
@@ -16,7 +17,7 @@ public class TaskRespository {
             String[] fields = lines.get(i).split(" ", 3);
             boolean isCompleted = fields[0].equals("v");
             boolean isDeleted = fields[1].equals("x");
-            tasks.add(TaskMarshaller.unmarshal(i + 1, fields[2], isCompleted, isDeleted));
+            tasks.add(taskMarshaller.unmarshal(i + 1, fields[2], isCompleted, isDeleted));
         }
         return tasks;
     }
@@ -51,7 +52,7 @@ public class TaskRespository {
     public void create(Task task) {
         try (var bw =
                      Files.newBufferedWriter(Path.of(Constant.TASK_FILE), new StandardOpenOption[]{StandardOpenOption.APPEND})){
-            bw.write(TaskMarshaller.marshal(task));
+            bw.write(taskMarshaller.marshal(task));
             bw.newLine();
         } catch (IOException e) {
             throw new RuntimeException();

@@ -6,6 +6,7 @@ import java.util.List;
 
 @Getter
 public class AddCommand {
+    private final TaskMarshaller taskMarshaller = new TaskMarshaller();
     private final TaskRespository taskRespository;
     private final String[] args;
 
@@ -21,7 +22,7 @@ public class AddCommand {
 
     public List<String> execute() {
         String taskName = String.join(" ", args);
-        var task = TaskMarshaller.unmarshal(0, taskName, false, false);
+        var task = taskMarshaller.unmarshal(0, taskName, false, false);
         taskRespository.create(task);
         return List.of();
     }
