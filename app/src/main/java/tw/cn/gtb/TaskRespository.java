@@ -13,9 +13,10 @@ public class TaskRespository {
     public List<Task> loadTasks(List<String> lines) {
         List<Task> tasks = new ArrayList<>();
         for (int i = 0; i < lines.size(); i++) {
-            String[] fields = lines.get(i).split(" ", 2);
-            boolean completed = fields[0].equals("v");
-            tasks.add(TaskFactory.createTask(i + 1, fields[1], completed));
+            String[] fields = lines.get(i).split(" ", 3);
+            boolean isCompleted = fields[0].equals("v");
+            boolean isDeleted = fields[1].equals("x");
+            tasks.add(TaskFactory.createTask(i + 1, fields[2], isCompleted, isDeleted));
         }
         return tasks;
     }
@@ -32,7 +33,7 @@ public class TaskRespository {
 
     private List<String> getConditionalFormattedTasks(List<Task> tasks, boolean isCompleted) {
         List<String> res = tasks.stream().
-                filter(task -> task.isCompleted() == isCompleted)
+                filter(task -> task.isCompleted() == isCompleted && !task.isDeleted())
                 .map(Task::format)
                 .collect(Collectors.toList());
         if (res.isEmpty()) res.add("Empty");
@@ -50,7 +51,7 @@ public class TaskRespository {
     public void create(Task task) {
         try (var bw =
                      Files.newBufferedWriter(Path.of(Constant.TASK_FILE), new StandardOpenOption[]{StandardOpenOption.APPEND})){
-            bw.write("+ " + task.getName());
+            bw.write("+ " + "+ " +task.getName());
             bw.newLine();
         } catch (IOException e) {
             throw new RuntimeException();

@@ -1,19 +1,20 @@
 package tw.cn.gtb;
 
 import lombok.Getter;
-
 import java.util.Objects;
 
 @Getter
 public class Task {
     private final int id;
     private final String name;
-    private final boolean completed;
+    private final boolean isCompleted;
+    private final boolean isDeleted;
 
-    public Task(int id, String name, boolean completed) {
+    public Task(int id, String name, boolean completed, boolean isDeleted) {
         this.id = id;
         this.name = name;
-        this.completed = completed;
+        this.isCompleted = completed;
+        this.isDeleted = isDeleted;
     }
 
     public String format() {
@@ -25,16 +26,17 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return id == task.id && completed == task.completed && Objects.equals(name, task.name);
+        return id == task.id && isCompleted == task.isCompleted
+                && isDeleted == task.isDeleted && Objects.equals(name, task.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, completed);
+        return Objects.hash(id, name, isCompleted, isDeleted);
     }
 
     @Override
     public String toString() {
-        return id + " " + completed + " " + name;
+        return id + " " + isCompleted + " " + name;
     }
 }

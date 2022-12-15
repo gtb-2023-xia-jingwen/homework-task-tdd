@@ -16,7 +16,7 @@ class AppTest {
 
     @BeforeEach
     void initData() {
-        List<String> lines = List.of("v go to walk", "v count stars");
+        List<String> lines = List.of("v + go to walk", "v + count stars");
         writeDataToFile(lines);
         app = new App();
     }
