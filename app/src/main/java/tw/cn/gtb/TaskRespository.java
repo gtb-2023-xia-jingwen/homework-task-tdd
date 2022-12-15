@@ -16,7 +16,7 @@ public class TaskRespository {
             String[] fields = lines.get(i).split(" ", 3);
             boolean isCompleted = fields[0].equals("v");
             boolean isDeleted = fields[1].equals("x");
-            tasks.add(TaskFactory.createTask(i + 1, fields[2], isCompleted, isDeleted));
+            tasks.add(TaskMarshaller.unmarshal(i + 1, fields[2], isCompleted, isDeleted));
         }
         return tasks;
     }
@@ -51,7 +51,7 @@ public class TaskRespository {
     public void create(Task task) {
         try (var bw =
                      Files.newBufferedWriter(Path.of(Constant.TASK_FILE), new StandardOpenOption[]{StandardOpenOption.APPEND})){
-            bw.write(TaskFactory.marshal(task));
+            bw.write(TaskMarshaller.marshal(task));
             bw.newLine();
         } catch (IOException e) {
             throw new RuntimeException();
