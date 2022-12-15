@@ -1,6 +1,5 @@
 package tw.cn.gtb;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class App {
@@ -15,9 +14,7 @@ public class App {
         if (args.length == 0) {
             throw  new UnsupportedOperationException();
         }
-        String cmdName = args[0];
-        String[] params = Arrays.copyOfRange(args, 1, args.length);
-        Command cmd = CommandFactory.getCommand(cmdName, params, taskRespository);
+        Command cmd = CommandFactory.getCommand(taskRespository, args);
         return cmd.execute();
     }
 }

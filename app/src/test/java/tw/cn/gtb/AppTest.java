@@ -109,4 +109,13 @@ class AppTest {
             }
         }
     }
+
+    @Nested
+    class UnknownCommand {
+        @Test
+        void should_given_hint() {
+            Assertions.assertEquals(List.of("Unknown command: ddd"), app.run("ddd", "1", "404"));
+            Assertions.assertEquals(List.of("Unknown command: xxx"), app.run("xxx", "1", "404"));
+        }
+    }
 }
