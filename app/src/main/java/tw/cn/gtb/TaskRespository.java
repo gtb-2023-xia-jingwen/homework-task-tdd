@@ -11,7 +11,8 @@ import java.util.stream.Collectors;
 public class TaskRespository {
     private final TaskMarshaller taskMarshaller = new TaskMarshaller();
 
-    public List<Task> loadTasks(List<String> lines) {
+    public List<Task> loadTasks() {
+        List<String> lines = readFileLines();
         List<Task> tasks = new ArrayList<>();
         for (int i = 0; i < lines.size(); i++) {
             tasks.add(taskMarshaller.unmarshal(i + 1, lines.get(i)));
@@ -57,8 +58,10 @@ public class TaskRespository {
     }
 
     public void removeTaskById(int id) {
-        List<Task> tasks = loadTasks(readFileLines());
-        tasks.get(id - 1).setDeleted(true);
+        List<Task> tasks = loadTasks();
+        tasks.stream()
+                .filter(task -> task.getId() == id)
+                .forEach(task -> task.setDeleted(true));
         try (var bw =
                      Files.newBufferedWriter(Path.of(Constant.TASK_FILE))){
             for (Task task : tasks) {

@@ -1,6 +1,7 @@
 package tw.cn.gtb;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class RemoveCommand {
@@ -12,7 +13,7 @@ public class RemoveCommand {
         this.taskRespository = taskRespository;
         this.param = params;
     }
-    
+
     public List<String> execute() {
         List<Integer> ids = parseIds();
         for (int id : ids) {
@@ -22,9 +23,14 @@ public class RemoveCommand {
     }
 
     private List<Integer> parseIds() {
-        Stream.of(param)
+        List<Integer> ids = Stream.of(param)
                 .map(Integer::parseInt)
-                .forEach(taskRespository::removeTaskById);
+                .collect(Collectors.toList());
+        taskRespository
+                .loadTasks()
+                .stream().filter(task -> !task.isDeleted())
+                .filter(task -> ids.contains(task.getId()))
+                .forEach(task -> taskRespository.removeTaskById(task.getId()));
         return List.of();
     }
 }

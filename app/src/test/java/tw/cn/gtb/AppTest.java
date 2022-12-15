@@ -98,6 +98,15 @@ class AppTest {
                 List<String> res = app.run();
                 Assertions.assertEquals(List.of("#To be done", "Empty", "#Completed", "Empty"), res);
             }
+
+            @Test
+            void should_only_remove_existing_task() {
+                // When
+                app.run("remove", "1", "404");
+                // Then
+                List<String> res = app.run();
+                Assertions.assertEquals(List.of("#To be done", "Empty", "#Completed", "2 count stars"), res);
+            }
         }
     }
 }
