@@ -8,7 +8,7 @@ public class RemoveCommand {
     private final TaskRespository taskRespository;
     private final String[] param;
 
-    public RemoveCommand(TaskRespository taskRespository, String[] params) {
+    public RemoveCommand(TaskRespository taskRespository, String... params) {
         this.taskRespository = taskRespository;
         this.param = params;
     }
