@@ -76,4 +76,28 @@ class AppTest {
             }
         }
     }
+
+    @Nested
+    class RemoveCommand {
+        @Nested
+        class RemoveTaskGivenSingleId {
+            @Test
+            void should_remove_task_with_single_id() {
+                // When
+                app.run("remove", "1");
+                // Then
+                List<String> res = app.run();
+                Assertions.assertEquals(List.of("#To be done", "Empty", "#Completed", "2 count stars"), res);
+            }
+
+            @Test
+            void should_remove_task_with_multiple_ids() {
+                // When
+                app.run("remove", "1", "2");
+                // Then
+                List<String> res = app.run();
+                Assertions.assertEquals(List.of("#To be done", "Empty", "#Completed", "Empty"), res);
+            }
+        }
+    }
 }

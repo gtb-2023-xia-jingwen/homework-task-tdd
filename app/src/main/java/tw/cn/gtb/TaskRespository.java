@@ -14,7 +14,7 @@ public class TaskRespository {
     public List<Task> loadTasks(List<String> lines) {
         List<Task> tasks = new ArrayList<>();
         for (int i = 0; i < lines.size(); i++) {
-            tasks.add(taskMarshaller.unmarshal(i, lines.get(i)));
+            tasks.add(taskMarshaller.unmarshal(i + 1, lines.get(i)));
         }
         return tasks;
     }
@@ -51,6 +51,20 @@ public class TaskRespository {
                      Files.newBufferedWriter(Path.of(Constant.TASK_FILE), new StandardOpenOption[]{StandardOpenOption.APPEND})){
             bw.write(taskMarshaller.marshal(task));
             bw.newLine();
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    public void removeTaskById(int id) {
+        List<Task> tasks = loadTasks(readFileLines());
+        tasks.get(id - 1).setDeleted(true);
+        try (var bw =
+                     Files.newBufferedWriter(Path.of(Constant.TASK_FILE))){
+            for (Task task : tasks) {
+                bw.write(taskMarshaller.marshal(task));
+                bw.newLine();
+            }
         } catch (IOException e) {
             throw new RuntimeException();
         }

@@ -1,14 +1,17 @@
 package tw.cn.gtb;
 
 import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
 
 @Getter
+@Setter
 public class Task {
     private final int id;
     private final String name;
-    private final boolean isCompleted;
-    private final boolean isDeleted;
+    private boolean isCompleted;
+    private boolean isDeleted;
 
     public Task(int id, String name, boolean completed, boolean isDeleted) {
         this.id = id;
