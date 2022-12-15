@@ -14,10 +14,7 @@ public class TaskRespository {
     public List<Task> loadTasks(List<String> lines) {
         List<Task> tasks = new ArrayList<>();
         for (int i = 0; i < lines.size(); i++) {
-            String[] fields = lines.get(i).split(" ", 3);
-            boolean isCompleted = fields[0].equals("v");
-            boolean isDeleted = fields[1].equals("x");
-            tasks.add(taskMarshaller.unmarshal(i + 1, fields[2], isCompleted, isDeleted));
+            tasks.add(taskMarshaller.unmarshal(i, lines.get(i)));
         }
         return tasks;
     }

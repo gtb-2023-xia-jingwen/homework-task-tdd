@@ -22,7 +22,7 @@ public class AddCommand {
 
     public List<String> execute() {
         String taskName = String.join(" ", args);
-        var task = taskMarshaller.unmarshal(0, taskName, false, false);
+        var task = new Task(0, taskName, false, false);
         taskRespository.create(task);
         return List.of();
     }

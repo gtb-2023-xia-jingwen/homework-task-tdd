@@ -14,7 +14,7 @@ public class TaskMarshallerTest {
 
     @BeforeEach
     public void init() {
-        taskMarshaller =  new TaskMarshaller();
+        taskMarshaller = new TaskMarshaller();
     }
 
     @ParameterizedTest
@@ -30,6 +30,23 @@ public class TaskMarshallerTest {
                 Arguments.of("v + rush", new Task(0, "rush", true, false)),
                 Arguments.of("v x rush", new Task(0, "rush", true, true)),
                 Arguments.of("+ + yes and you and I", new Task(0, "yes and you and I", false, false))
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("task_and_line")
+    public void should_unmarshal_from_text(Task task, String line) {
+        Assertions.assertEquals(task, taskMarshaller.unmarshal(0, line));
+    }
+
+    public static Stream<Arguments> task_and_line() {
+        return Stream.of(
+                Arguments.of(new Task(0, "rush", false, false)
+                        , "+ + rush"),
+                Arguments.of(new Task(0, "rush ", true, false)
+                        , "v + rush "),
+                Arguments.of(new Task(0, "rush ", true, true)
+                        , "v x rush ")
         );
     }
 
