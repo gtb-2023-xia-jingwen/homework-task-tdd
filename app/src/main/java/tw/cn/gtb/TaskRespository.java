@@ -51,7 +51,7 @@ public class TaskRespository {
     public void create(Task task) {
         try (var bw =
                      Files.newBufferedWriter(Path.of(Constant.TASK_FILE), new StandardOpenOption[]{StandardOpenOption.APPEND})){
-            bw.write("+ " + "+ " +task.getName());
+            bw.write(TaskFactory.marshal(task));
             bw.newLine();
         } catch (IOException e) {
             throw new RuntimeException();
